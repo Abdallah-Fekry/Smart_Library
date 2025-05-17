@@ -4,7 +4,7 @@ import os
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 import bs4
-from  langchain_community.document_loaders import PDFPlumberLoader, TextLoader
+from  langchain.document_loaders import PDFPlumberLoader, TextLoader
 import requests
 
 API = "AIzaSyCaPzDUJujNjXa8r2wQ5P0RCHlTMXJc5zE"
