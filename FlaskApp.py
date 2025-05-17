@@ -93,7 +93,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 @app.route('/')
 def index():
     # return render_template('upload.html')  # صفحة فيها form للرفع
-    return "<p>Waraq Chatbot</p>"
+    return "Waraq Chatbot"
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
