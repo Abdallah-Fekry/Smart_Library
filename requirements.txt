@@ -1,6 +1,6 @@
 flask
 langchain_google_genai
 langchain
-langchain_community
+langchain-community
 beautifulsoup4
 pdfplumber
