@@ -1,6 +1,6 @@
-flask
+streamlit
 langchain_google_genai
-langchain==0.2.15
-langchain-community==0.2.12
+langchain
+langchain_community
 beautifulsoup4
 pdfplumber
