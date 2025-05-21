@@ -2,7 +2,7 @@ import streamlit as st
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 import bs4
-from langchain.document_loaders import PDFPlumberLoader, TextLoader
+from langchain.document_loaders import PDFPlumberLoader, TextLoader, PyMuPDFLoader
 import requests
 # import validators
 
@@ -45,7 +45,8 @@ def web_scrap(url):
 
 def file_scrap(path):
   if path.lower().endswith(".pdf"):
-    loader = PDFPlumberLoader(path)
+    # loader = PDFPlumberLoader(path)
+      loader = PyMuPDFLoader(path)
   else:
     loader = TextLoader(path, encoding="utf-8")
   doc = loader.load()
@@ -116,21 +117,21 @@ else:
     answer = chatting(message=message)
     st.chat_message("assistant").markdown(answer)
 
-if bt_file:
-    if file is not None:
-        import tempfile
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
-            tmp_file.write(file.getbuffer())
-            tmp_path = tmp_file.name
-        answer = chatting(type='file', path=tmp_path)
-        st.chat_message("assistant").markdown(answer)
 # if bt_file:
 #     if file is not None:
-#         with open(file.name, 'wb') as f:
-#             f.write(file.getbuffer())
-#         answer = chatting(type='file', path=file.name)
+#         import tempfile
+#         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+#             tmp_file.write(file.getbuffer())
+#             tmp_path = tmp_file.name
+#         answer = chatting(type='file', path=tmp_path)
 #         st.chat_message("assistant").markdown(answer)
-#         del file
+if bt_file:
+    if file is not None:
+        with open(file.name, 'wb') as f:
+            f.write(file.getbuffer())
+        answer = chatting(type='file', path=file.name)
+        st.chat_message("assistant").markdown(answer)
+        del file
 
 if bt:
     if link is not "":
