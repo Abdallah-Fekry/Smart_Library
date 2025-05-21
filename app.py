@@ -45,6 +45,7 @@ def web_scrap(url):
 
 def file_scrap(path):
   if path.lower().endswith(".pdf"):
+      st.write(path)
     # loader = PDFPlumberLoader(path)
       loader = PyMuPDFLoader(path)
   else:
