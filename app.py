@@ -45,9 +45,7 @@ def web_scrap(url):
 
 def file_scrap(path):
   if path.lower().endswith(".pdf"):
-      st.write(path)
-    # loader = PDFPlumberLoader(path)
-      loader = PDFPlumberLoader(path)
+    loader = PDFPlumberLoader(path)
   else:
     loader = TextLoader(path, encoding="utf-8")
   doc = loader.load()
