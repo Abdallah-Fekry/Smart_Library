@@ -2,7 +2,7 @@ import streamlit as st
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.schema import SystemMessage, HumanMessage, AIMessage
 import bs4
-from langchain.document_loaders import PDFPlumberLoader, TextLoader, PyMuPDFLoader
+from langchain.document_loaders import PDFPlumberLoader, TextLoader
 import requests
 # import validators
 
@@ -47,7 +47,7 @@ def file_scrap(path):
   if path.lower().endswith(".pdf"):
       st.write(path)
     # loader = PDFPlumberLoader(path)
-      loader = PyMuPDFLoader(path)
+      loader = PDFPlumberLoader(path)
   else:
     loader = TextLoader(path, encoding="utf-8")
   doc = loader.load()
