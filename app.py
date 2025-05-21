@@ -44,15 +44,16 @@ def web_scrap(url):
   return doc
 
 def file_scrap(path):
-  if path.split('.')[1] == "pdf":
+  if path.lower().endswith(".pdf"):
     loader = PDFPlumberLoader(path)
   else:
-    loader = TextLoader(path)
+    loader = TextLoader(path, encoding="utf-8")
   doc = loader.load()
-  d = ""
-  for i in doc:
-    d += i.page_content
-  return d
+  # d = ""
+  # for i in doc:
+  #   d += i.page_content
+  # return d
+  return "".join([d.page_content for d in doc])
 
 def summarize(m, type="message"):
     st.session_state.messages.append(HumanMessage(content=m))
@@ -117,11 +118,19 @@ else:
 
 if bt_file:
     if file is not None:
-        with open(file.name, 'wb') as f:
-            f.write(file.getbuffer())
-        answer = chatting(type='file', path=file.name)
+        import tempfile
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+            tmp_file.write(file.getbuffer())
+            tmp_path = tmp_file.name
+        answer = chatting(type='file', path=tmp_path)
         st.chat_message("assistant").markdown(answer)
-        del file
+# if bt_file:
+#     if file is not None:
+#         with open(file.name, 'wb') as f:
+#             f.write(file.getbuffer())
+#         answer = chatting(type='file', path=file.name)
+#         st.chat_message("assistant").markdown(answer)
+#         del file
 
 if bt:
     if link is not "":
