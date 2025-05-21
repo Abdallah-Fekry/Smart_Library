@@ -127,9 +127,10 @@ else:
 #         st.chat_message("assistant").markdown(answer)
 if bt_file:
     if file is not None:
-        with open(file.name, 'wb') as f:
+        file_path = "test.pdf"
+        with open("test.pdf", 'wb') as f:
             f.write(file.getbuffer())
-        answer = chatting(type='file', path=file.name)
+        answer = chatting(type='file', path=file_path)
         st.chat_message("assistant").markdown(answer)
         del file
 
