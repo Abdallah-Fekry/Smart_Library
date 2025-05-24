@@ -10,9 +10,10 @@ API = st.secrets["API"]
 
 st.set_page_config(page_title="Waraq Bot", page_icon='images/icon.png')
 
+books_text = file_scrap('books.txt')
+
 if "messages" not in st.session_state:
-    st.session_state.messages = [
-        SystemMessage(content="""you are a helpfull AI assistant with main tasks:
+    template = """you are a helpfull AI assistant with main tasks:
                       1. Summarizing books and documents" (read long texts and summarize them briefly for user, focusing on the most important points and topics),
                       2. Answering questions: (answer questions about the texts you have on hand),
                       3. Suggesting books: (suggest books based on users interests),
@@ -26,9 +27,14 @@ if "messages" not in st.session_state:
     if you asked by Arabic answer by Egyptian Arabic if you asked by English answer by English.
     You can help the users that can't attach the book for you ask them to press into the sidebar, upload the file then press Summarize button.
     You can help the users that can't attach the web link for you ask them to press into the sidebar, paste the web link then press Summarize button.
-    you can recommend a books according to the user's needs, you can ask him to recommend the books. Recommend the book name, edition, and description.
-    text:{quesion}"""),
+    "NOTE" Recommend books only from these data {books_data}
+    you can recommend a books according to the user's needs from the given books data give the user information about the book which are [book title, author, published_year, and description], you can ask the user to recommend the books.
+    """
+    prompt_template = PromptTemplate(input_variables=['books_data'], template=template).format(books_data = books_text)
+    st.session_state.messages = [
+        SystemMessage(content=prompt_template),
     ]
+
 
 
 if "chat" not in st.session_state:
